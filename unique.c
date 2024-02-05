@@ -16,10 +16,10 @@ int main(int argc , char *argv[])
     int switcher = 1;
     char currentline1[100];
     char currentline2[100];
-    int jitgit = 0;
+    int addnewline = 0;
 
     while (1){
-        jitgit = 0;
+        addnewline = 0;
 //the first part of the while loop will be to extract a line 
 //the line will be either from a file, or from a scanf
 //we are alteranating between which lines we are coppying too, so that we compare between them
@@ -59,7 +59,7 @@ int main(int argc , char *argv[])
             if (currentline1[line_char_ct] != currentline2[line_char_ct]){
                 if ((currentline1[line_char_ct] == '\0' && currentline2[line_char_ct] == '\n' )||
                     (currentline1[line_char_ct] == '\n' && currentline2[line_char_ct] == '\0')){
-                        jitgit = 1;
+                        addnewline = 1;
                         break;
                     }
                 unique = 1;
@@ -79,10 +79,10 @@ int main(int argc , char *argv[])
             if (switcher == 1){
                 printf("%s" , currentline2);
             }
-            jitgit = 1;
+            addnewline = 1;
         }   
     }
-    if (jitgit){
+    if (addnewline){
         printf("\n");
     }
     return 0;
