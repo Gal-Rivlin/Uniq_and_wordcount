@@ -41,7 +41,7 @@ int main(int argc , char *argv[])
 //now the third part will be to read the line and add to our counters
 
         if (running){
-            line_ct++;
+
             int line_char_ct = 0;
             int new_word = 1;
             while (currentline[line_char_ct] != '\0'){
@@ -53,9 +53,10 @@ int main(int argc , char *argv[])
                 else if (!new_word && isspace(currentline[line_char_ct])){
                     new_word = 1;
                 }
-                else if (currentline[line_char_ct] == '\n'){
-                    line_char_ct++;
+                if (currentline[line_char_ct] == '\n'){
+                    line_ct++;       
                 }
+                line_char_ct++;
                 
 
             }
