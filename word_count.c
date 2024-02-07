@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
 
-
 int main(int argc , char *argv[])
 {
 //case 1: we get a file
@@ -14,61 +13,38 @@ int main(int argc , char *argv[])
         return 1;
         }
     }
-    int running = 1;
+    else{
+        file = stdin;
+    }
 
     int line_ct = 0;
     int word_ct = 0;
     int char_ct = 0;
-
-    while (running){
-//the first part of the while loop will be to extract a line 
-//the line will be either from a file, or from a scanf
-        char currentline[100];
-        currentline[0] = '\0';
-
-        if (argc == 1){
-            fgets(currentline, sizeof(currentline), stdin);
+    char c;
+    int new_word = 1;
+    
+    while (fscanf(file , "%c" , &c) != EOF){
+ 
+        char_ct++;
+        if (new_word && !isspace(c)){
+            new_word = 0;
+            word_ct++;
         }
-        else{
-            fgets(currentline, sizeof(currentline), file);
+        else if (!new_word && isspace(c)){
+            new_word = 1;
         }
-
-//the second part will be to check if we are done: we do this by checking if the first char is \0
-        if (currentline[0] == '\0'){
-            running = 0;
+        if (c == '\n'){
+            line_ct++;       
         }
-
-//now the third part will be to read the line and add to our counters
-
-        if (running){
-
-            int line_char_ct = 0;
-            int new_word = 1;
-            while (currentline[line_char_ct] != '\0'){
-                char_ct++;
-                if (new_word && !isspace(currentline[line_char_ct])){
-                    new_word = 0;
-                    word_ct++;
-                }
-                else if (!new_word && isspace(currentline[line_char_ct])){
-                    new_word = 1;
-                }
-                if (currentline[line_char_ct] == '\n'){
-                    line_ct++;       
-                }
-                line_char_ct++;
-                
-
-            }
-
-
-
-        }
-
-
     }
 
-    printf("%d    %d    %d  %s\n" , line_ct , word_ct , char_ct, argv[1]);
+    if (argc > 1){
+        fclose(file);
+        printf("%d    %d    %d  %s\n" , line_ct , word_ct , char_ct, argv[1]);
+    }
+    else{
+        printf("%d    %d    %d  \n" , line_ct , word_ct , char_ct);
+    }
 
     return 0;
 }
